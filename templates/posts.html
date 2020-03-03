@@ -5,18 +5,40 @@
 {% endblock %}
 
 {% block body %}
+	<br>
+	<hr>
+	<h2>Create New Blog Post:</h2>
+	<form action='/posts' method='POST'>
+		<label for="title">Title:</label> 
+		<input class="form-control" type="text" name="title" id="title" placeholder="Enter Title" aria-label="Enter Title">
+		<br>
+		
+		<label for="author">Author:</label> 
+		<input class="form-control" type="text" name="author" id="author" placeholder="Enter author" aria-label="Enter author">
+		<br>
+		 
+		<label for="content">Post:</label>
+		<textarea class="form-control" name="content" id="content" rows="3"></textarea>
+		<br>
+		<input type='submit' value='Post'>
+	</form>
+	<br>
+	<hr>
 	{% for p in posts%}
+		<br>
 		<h1>{{ p.title }}</h1>
 
 		{% if p.author %}
-			<h3>By: {{ p.author }}</h3>
-			<p>{{ p.content }}</p>
-			<p>{{ p.date_posted }}</p>
+			<small>written by {{ p.author }} on {{ p.date_posted }} </small> 
 		{% else %}
-			<h3>By: Author Not Available</h3>
-			<p>{{ p.content }}</p>
-			<p>{{ p.date_posted }}</p>
+			<small>written by Author Not Available on {{ p.date_posted }}</small>
+
 		{% endif %}
 
+		<p>{{ p.content }}</p>
+		
+		<a class='btn btn-danger' href='/posts/delete/{{ p.id }}'>Delete</a>
+		<a class='btn btn-warning' href='/posts/edit/{{ p.id }}'>Edit</a>
+		<hr>
 	{% endfor %}
 {% endblock %}
